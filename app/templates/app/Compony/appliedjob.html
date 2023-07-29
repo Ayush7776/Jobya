@@ -1,0 +1,68 @@
+{% extends 'app/Compony/base1.html' %}
+
+{% block content %}
+
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4 mb-4">Candidate Who Applied Jobs</h1>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Jobs DataTable
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Job Name</th>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Experiance</th>
+                                            <th>Qualification</th>
+                                            <th>Website</th>
+                                            <th>Minimum Sallary</th>
+                                            <th>Maximum Sallary</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Job Name</th>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Experiance</th>
+                                            <th>Qualification</th>
+                                            <th>Website</th>
+                                            <th>Minimum Sallary</th>
+                                            <th>Maximum Sallary</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    {% if  aplist%}
+                                    {% for i in aplist %}
+                                        <tr>
+                                            <td>{{i.job.jobname}}</td>
+                                            <td>{{i.candidate.firstname}} {{i.candidate.lastname}}</td>
+                                            <td>{{i.candidate.contact}}</td>
+                                            <td>{{i.expiriance}}</td>
+                                            <td>{{i.education}}</td>
+                                            <td>{{i.website}}</td>
+                                            <td>{{i.min_salary}}</td>
+                                            <td>{{i.max_salary}}</td>
+                                        </tr>
+
+                                        {% endfor %}
+                                        {% endif %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                
+    </body>
+</html>
+
+{% endblock %}

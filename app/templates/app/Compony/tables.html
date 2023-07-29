@@ -1,0 +1,63 @@
+{% extends 'app/Compony/base1.html' %}
+
+{% block content %}
+
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4 mb-4">Posted Jobs</h1>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Jobs DataTable
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Post Name</th>
+                                            <th>Compony Name</th>
+                                            <th>Email</th>
+                                            <th>Experiance</th>
+                                            <th>Qualification</th>
+                                            <th>Sallary Package</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Post Name</th>
+                                            <th>Compony Name</th>
+                                            <th>Email</th>
+                                            <th>Experiance</th>
+                                            <th>Qualification</th>
+                                            <th>Sallary Package</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    {% if  all_info%}
+                                    {% for i in all_info %}
+                                        <tr>
+                                            <td>{{i.jobname}}</td>
+                                            <td>{{i.componyname}}</td>
+                                            <td>{{i.componyemail}}</td>
+                                            <td>{{i.experiace}}</td>
+                                            <td>{{i.qualification}}</td>
+                                            <td>{{i.salarypackage}}</td>
+                                            
+                                        </tr>
+
+                                        {% endfor %}
+                                        {% endif %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                
+    </body>
+</html>
+
+{% endblock %}
