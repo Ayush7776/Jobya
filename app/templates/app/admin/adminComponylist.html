@@ -1,0 +1,77 @@
+{% extends 'app/admin/base1.html' %}
+
+{% block content %}
+
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4 mb-4">Comopny List</h1>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Jobs DataTable
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Account Created</th>
+                                            <th>Account Updated</th>
+                                            <th>Varify</th>
+                                            <th>Update</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Account Created</th>
+                                            <th>Account Updated</th>
+                                            <th>Varify</th>
+                                            <th>Update</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    {% if  all_compony%}
+                                    {% for i in all_compony %}
+                                        <tr>
+                                            <td>{{i.email}}</td>
+                                            <td>{{i.role}}</td>
+                                            <td>{{i.is_active}}</td>
+                                            <td>{{i.is_updated}}</td>
+                                            <td>{{i.is_varified}}</td>
+                                            <td>
+                                                <form action="{% url 'adminverifycomp' pk=i.id %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="submit" value="Update" class="btn btn-warning btn-sm"/>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                
+                                                    <form action="{% url 'admincompdel' pk=i.id %}" method="POST">
+                                                        {% csrf_token %}
+                                                    <input type="submit" value="Delete" class="btn btn-danger btn-sm"/>
+                                                </form>
+                                            </td>
+                                            
+                                        </tr>
+
+                                        {% endfor %}
+                                        {% endif %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                
+    </body>
+</html>
+
+{% endblock %}
