@@ -62,7 +62,9 @@
                 </div>
                 <div class="float-right">
                     <ul class="topbar-list list-unstyled d-flex" style="margin: 11px 0px;">
-                        <li class="list-inline-item"><a href="javascript:void(0);"><img src="{{MEDIA_URL}} {{request.session.profile_pic }}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        <li class="list-inline-item"><a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                          </svg>
                            {{ request.session.firstname }} {{ request.session.lastname }}</a></li>
                     </ul>
                 </div>
@@ -154,9 +156,13 @@
                     </li>
                     {% if request.session.firstname %}
                     <li class="has-submenu">
-                        <a href="javascript:void(0)">{{ request.session.firstname }} {{ request.session.lastname }}</a><span class="menu-arrow"></span>
+                        <a href="javascript:void(0)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                          </svg> {{ request.session.firstname }} {{ request.session.lastname }}</a><span class="menu-arrow"></span>
                         <ul class="submenu">
-                            <li><a href="{% url 'profile' pk=request.session.id %}">Profile</a></li>
+                            <li><a href="{% url 'profile' pk=request.session.id %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+</svg> Profile</a></li>
                             <li><a href="{% url 'userlogout' %}">Logout</a></li>
                         </ul>
                     </li>
@@ -169,9 +175,8 @@
                         </ul>
                     </li>
                     {% endif %}
-                    
                 </ul><!--end navigation menu-->
-                
+                {% include 'app/massage.html' %}
             </div><!--end navigation-->
         </div><!--end container-->
         <!--end end-->

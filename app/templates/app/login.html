@@ -52,9 +52,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-4 col-md-6">
                                 <div class="login-page bg-white shadow rounded p-4">
+                                    {% include 'app/massage.html' %}
                                     <div class="text-center">
                                         <h4 class="mb-4">Login</h4>  
-                                        <h5 class="mb-4 text-danger">{{ msg }}</h5>  
                                     </div>
                                     <form class="login-form" method="post" action="{% url 'loginuser' %}">
                                         {% csrf_token %}

@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from . models import *
 from random import randint 
+from django.contrib import messages
 # Create your views here.
 
 def IndexPage(request):
@@ -23,16 +24,16 @@ def RegisterUser(request):
         cpassword=request.POST['cpassword']
         user=UserMaster.objects.filter(email=email)
         if user:
-            massage="Company Allready Exist"
-            return render(request,'app/signup.html',{'msg':massage})
+            messages.error(request,"Company Allready Exist")
+            return render(request,'app/signup.html')
         else:
             if password==cpassword:
                 otp=randint(100000,999999)
                 newuser=UserMaster.objects.create(role=role,otp=otp,email=email,password=password)
                 newcomp=Company.objects.create(user_id=newuser,firstname=fname,lastname=lname)
                 return render(request,'app/otpverify.html',{'email':email})  
-            massage="Password And Confirm Password Not Matched.."
-            return render(request,'app/signup.html',{'msg':massage})
+            messages.error(request,"Password And Confirm Password Not Matched..")
+            return render(request,'app/signup.html')
     else:
         if request.POST['role']=="Candidate":
             role=request.POST['role']
@@ -45,16 +46,17 @@ def RegisterUser(request):
             user=UserMaster.objects.filter(email=email)
 
         if user:
-            massage="Candidate Allready Exist"
-            return render(request,'app/signup.html',{'msg':massage})
+            messages.error(request,"Candidate Allready Exist")
+            return render(request,'app/signup.html')
         else:
             if password==cpassword:
                 otp=randint(100000,999999)
+                
                 newuser=UserMaster.objects.create(role=role,otp=otp,email=email,password=password)
                 newcomp=Candidate.objects.create(user_id=newuser,firstname=fname,lastname=lname)
                 return render(request,'app/otpverify.html',{'email':email})  
-            massage="Password And Confirm Password Not Matched.."
-            return render(request,'app/signup.html',{'msg':massage})
+            messages.error(request,"Password And Confirm Password Not Matched..")
+            return render(request,'app/signup.html')
 def Otpverify(request):
     if request.method=="POST":
         email=request.POST['email']     
@@ -63,11 +65,12 @@ def Otpverify(request):
 
         if user:
             if user.otp == otp:
-                massage="Account Created SucessFully"
-                return render(request,'app/login.html',{'msg':massage})
+                messages.success(request,"Account Created SucessFully Please Login Using Your Credentials..")
+
+                return render(request,'app/login.html')
             else:
-                massage="Invalid OTP"
-                return render(request,'app/otpverify.html',{'msg':massage})
+                messages.error(request,"Invalid OTP..")
+                return render(request,'app/otpverify.html')
     else:
         return render(request,'app/sighup.html')
 
@@ -79,8 +82,8 @@ def Loginuser(request):
         try:
             user=UserMaster.objects.get(email=email)
         except:
-            massage="User Does Not Exists"
-            return render(request,'app/login.html',{'msg':massage})
+            messages.error(request,"User Does Not Exist")
+            return render(request,'app/login.html')
             
         if user:
             if user.password==password and user.role=="Candidate":
@@ -91,10 +94,9 @@ def Loginuser(request):
                 request.session['lastname']=can.lastname
                 request.session['email']=user.email
                 request.session['password']=user.password
-                request.session['profile_pic']=can.profile_pic
                 return redirect('index')
             else:
-                massage="Password Does Not Match"
+                messages.error(request,"Password And Confirm Password Not Matched..")
                 return render(request,'app/login.html',{'msg':massage})
   
     if request.POST['role']=="Company":
@@ -104,8 +106,8 @@ def Loginuser(request):
         try:
             user=UserMaster.objects.get(email=email)
         except:
-            massage="Compony Does Not Exists"
-            return render(request,'app/login.html',{'msg':massage})
+            messages.error(request,"Compony Does Not Exists..")
+            return render(request,'app/login.html')
 
         if user:
             if user.password==password and user.role=="Company":
@@ -116,11 +118,11 @@ def Loginuser(request):
                 request.session['lastname']=can.lastname
                 request.session['email']=user.email
                 request.session['password']=user.password
-                request.session['profile_pic']=can.profile_pic
                 return redirect('componyindex')
     
-    massage="Creditentials Does Not Match"
-    return render(request,'app/login.html',{'msg':massage})
+    messages.error(request,"Creditentials Does Not Match..")
+
+    return render(request,'app/login.html')
             
 
 def Profile(request,pk):
@@ -151,6 +153,7 @@ def UpdateProfile(request,pk):
         can.profile_pic=request.FILES['profile_pic']
         can.save()
         url=f'/profile/{pk}' # Formating URL
+        messages.success(request,"Your Profile Has Been Updated..")
         return redirect(url)
     
 def ApplyJob(request,pk):
@@ -175,7 +178,7 @@ def Apply(request,pk):
         print("My Name Is Yash",edu,exp)
         # new=ApplyList.objects.create(candidate=can,job=job,education=edu,expiriance=exp)
         newapply=ApplyList.objects.create(candidate=can,job=job,education=edu,expiriance=exp,website=web,min_salary=min_salary,max_salary=max_salary,gender=gender,resume=resume)
-
+        messages.success(request,"Applied SucessFully..")
         url=f'/joblist' # Formating URL
         # massage="Thanks For Applied To"
         return redirect(url)
@@ -187,6 +190,7 @@ def UserLogout(request):
     del request.session['role']
     del request.session['firstname']
     del request.session['lastname']
+    messages.success(request,"Logout Suceesfully..")
     return redirect('login')
 
 
@@ -248,8 +252,10 @@ def JobDetailsSubmit(request,pk):
         massage="Your Job Has Been Posted"
         return render(request,"app/Compony/jobpost.html",{'msg':massage})
 
-def ShowPostJob(request):
+def ShowPostJob(request,pk):
+    print(pk)
     all_info=PostJobs.objects.all()
+    print(all_info)
     return render(request,'app/Compony/tables.html',{'all_info':all_info})
 
 def CandidateJoblist(request):

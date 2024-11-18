@@ -99,9 +99,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Post A New Job
                             </a>
-                            <a class="nav-link" href="{% url 'showpostjob' %}">
+                            
+                            <a class="nav-link" href="{% url 'showpostjob' pk=request.session.id %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Posted Jobs
+                                Posted Jobs 
                             </a>
                             <a class="nav-link" href="{% url 'appliedjob' %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>

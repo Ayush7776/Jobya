@@ -23,7 +23,7 @@ urlpatterns = [
     path('componyprofileupdate/<int:pk>',views.ComponyProfileUpdate,name='componyprofileupdate'),
     path('jobpostpage',views.JobPostPage,name='jobpostpage'),
     path('jobpost/<int:pk>',views.JobDetailsSubmit,name='jobpost'),
-    path('showpostjob',views.ShowPostJob,name='showpostjob'),
+    path('showpostjob/<int:pk>',views.ShowPostJob,name='showpostjob'),
     path('componylogout',views.ComponyLogout,name='componylogout'),
     path('appliedjob',views.AppliedJob,name='appliedjob'),
 
