@@ -6,7 +6,11 @@ from django.contrib import messages
 # Create your views here.
 
 def IndexPage(request):
-    return render(request,'app/index.html')
+    try: 
+        if request.session['role']=="Company":
+            return render(request,'app/Compony/index.html')
+    except: 
+        return render(request,'app/index.html')
 
 def SighupPage(request):
     return render(request,'app/signup.html')
